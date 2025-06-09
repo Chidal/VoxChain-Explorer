@@ -1,46 +1,156 @@
-# Getting Started with Create React App
+VoiceChain Explorer
+VoiceChain Explorer is an AI-powered, voice-driven blockchain explorer built for the WaveHack/Buildathon using Nodit’s Blockchain Model Context Protocol (MCP), Web3 Data API, and Stream API. It enables users to query blockchain data (e.g., NFT trades on Polygon or Ethereum) using natural language via voice or text input, delivering instant results with dynamic visualizations. The app features a modern, animated UI built with React, TypeScript, Tailwind CSS, and Framer Motion, designed to lower barriers to Web3 adoption through intuitive analytics.
+Features
+Voice-Driven Queries: Use voice input to query blockchain data (e.g., “Show me all NFT trades by this address on Polygon in the last 24 hours”) via the Web Speech API.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+AI-Powered Analytics: Leverages Nodit’s MCP to parse natural language queries and fetch relevant blockchain data.
 
-## Available Scripts
+Real-Time Updates: Streams live transaction data using Nodit’s Stream API (placeholder implemented; requires WebSocket setup).
 
-In the project directory, you can run:
+Dynamic Visualizations: Displays NFT trade volumes and transaction details with Chart.js-powered bar charts.
 
-### `npm start`
+Multi-Chain Support: Queries data from Polygon and Ethereum, with potential expansion to Aptos, XRPL, and more.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Responsive UI: Built with Tailwind CSS and Framer Motion for a sleek, animated, and mobile-friendly interface.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Tech Stack
+Frontend: React, TypeScript, Tailwind CSS, Framer Motion
 
-### `npm test`
+Data Visualization: Chart.js, react-chartjs-2
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Voice Input: Web Speech API
 
-### `npm run build`
+Blockchain Integration: Nodit Web3 Data API, MCP, Stream API
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Dependencies: Axios, PostCSS, Autoprefixer
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+WaveHack/Buildathon Alignment
+VoiceChain Explorer aligns with the AI + Analytics theme by:
+Using Nodit MCP for AI-driven query processing, enabling natural language interaction with blockchain data.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Leveraging Web3 Data API to fetch structured NFT and transaction data for analytics.
 
-### `npm run eject`
+Implementing Stream API for real-time transaction monitoring (placeholder included).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Visualizing on-chain data with dynamic charts, addressing the “On-chain Data Analysis” sub-topic.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Lowering Web3 adoption barriers through an intuitive voice and text interface.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Prerequisites
+Node.js: v20.x (LTS recommended; v23.6.0 tested)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+npm: v10.9.2 or later
 
-## Learn More
+Nodit API Key: Obtain from nodit.io
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Microphone: For voice input (Chrome recommended for Web Speech API)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Git: For cloning the repository
+
+Installation
+Clone the Repository:
+bash
+
+git clone https://github.com/your-username/voicechain-explorer.git
+cd voicechain-explorer
+
+Install Dependencies:
+bash
+
+npm install
+
+Set Up Environment Variables:
+Create a .env file in the project root:
+
+REACT_APP_NODIT_API_KEY=your-nodit-api-key
+
+Initialize Tailwind CSS:
+bash
+
+npx tailwindcss init -p
+
+Update tailwind.config.js:
+javascript
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};
+
+Start the Development Server:
+bash
+
+npm start
+
+Open http://localhost:3000 in a browser (Chrome recommended for voice input).
+
+Usage
+Query Blockchain Data:
+Use the voice input button to speak queries like “Show me all NFT trades by 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on Polygon in the last 24 hours.”
+
+Alternatively, type queries in the text input field.
+
+The app parses the query, fetches data via Nodit’s Web3 Data API, and displays results in a table.
+
+View Visualizations:
+Results include a bar chart showing NFT trade volumes over time, powered by Chart.js.
+
+Real-Time Monitoring:
+(Placeholder) Live transaction updates via Nodit’s Stream API (requires WebSocket setup).
+
+Project Structure
+
+voicechain-explorer/
+├── src/
+│   ├── components/
+│   │   ├── VoiceInput.tsx        # Voice and text input for queries
+│   │   ├── BlockchainResults.tsx # Displays query results in a table
+│   │   ├── DataVisualization.tsx # Renders Chart.js visualizations
+│   ├── services/
+│   │   ├── noditService.ts       # Nodit API and MCP integration
+│   ├── App.tsx                   # Main app component
+│   ├── index.tsx                 # Entry point
+│   ├── index.css                 # Tailwind CSS styles
+├── .env                          # Environment variables
+├── tailwind.config.js            # Tailwind CSS configuration
+├── postcss.config.js             # PostCSS configuration
+├── package.json                  # Project dependencies
+├── README.md                     # This file
+
+Nodit Integration
+Web3 Data API: Fetches NFT transfer history for a given address and chain (e.g., Polygon, Ethereum).
+typescript
+
+// Example: Fetch NFT trades
+const data = await fetchNFTTrades("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", "polygon");
+
+MCP: Configures an AI agent to parse natural language queries and invoke Nodit APIs dynamically (requires MCP server setup).
+javascript
+
+// Example MCP config
+{
+  "mcpServers": {
+    "nodit": {
+      "command": "npx",
+      "args": ["@noditlabs/nodit-mcp-server@latest"],
+      "env": { "NODIT_API_KEY": "your-api-key" }
+    }
+  }
+}
+
+
+
+
+
+// Example MCP config
+{
+  "mcpServers": {
+    "nodit": {
+      "command": "npx",
+      "args": ["@noditlabs/nodit-mcp-server@latest"],
+      "env": { "NODIT_API_KEY": "your-api-key" }
+    }
+  }
+}
