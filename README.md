@@ -1,163 +1,182 @@
-# 🧠 VoiceChain Explorer
+Sure! Here's your content neatly arranged in a professional and readable **README.md** format for the **VoiceChain Explorer** project:
 
-**VoiceChain Explorer** is an AI-powered, voice-driven blockchain explorer built for the **WaveHack/Buildathon** using **Nodit’s Blockchain Model Context Protocol (MCP)**, **Web3 Data API**, and **Stream API**. It allows users to query blockchain data (e.g., NFT trades on Polygon or Ethereum) via **natural language input**—voice or text—and receive instant, visualized results. The modern UI is animated and responsive, making Web3 data analytics intuitive and accessible.
+---
+
+# 🔊 VoiceChain Explorer
+
+**VoiceChain Explorer** is an AI-powered, voice-driven blockchain explorer built for the **WaveHack/Buildathon** using **Nodit’s** Web3 Data API, Model Context Protocol (MCP), and Stream API. Users can query blockchain data (e.g., NFT trades on Polygon or Ethereum) via voice or text using natural language, and receive instant results with dynamic visualizations.
+
+The app features a polished, animated UI built with **React**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**—designed to make Web3 analytics both accessible and engaging.
 
 ---
 
 ## 🚀 Features
 
-* **🎙 Voice-Driven Queries**
-  Use voice input to query blockchain data via the **Web Speech API**.
-  *E.g., “Show me all NFT trades by this address on Polygon in the last 24 hours.”*
-
-* **🤖 AI-Powered NLP**
-  Leverages **Nodit’s MCP** to parse natural language and translate it into structured API calls.
-
-* **📡 Real-Time Data Streaming**
-  Streams live transaction data using **Nodit’s Stream API** (WebSocket placeholder included).
-
-* **📊 Dynamic Visualizations**
-  Visualizes NFT trade volumes and transactions with **Chart.js**-powered bar charts.
-
-* **🌐 Multi-Chain Support**
-  Currently supports **Polygon** and **Ethereum**. Expansion potential includes **Aptos**, **XRPL**, and more.
-
-* **📱 Responsive UI**
-  Built with **React**, **Tailwind CSS**, and **Framer Motion** for a sleek, animated mobile-first experience.
+* 🎙️ **Voice-Driven Queries**: Query blockchain data with natural language via voice input using the Web Speech API (with a text fallback).
+* 🤖 **AI-Powered Analytics**: Integrates Nodit’s MCP for natural language query parsing.
+* ⏱️ **Real-Time Updates**: Streams live NFT trades (mocked for demo; WebSocket-ready).
+* 📊 **Dynamic Visualizations**: Trade data is visualized using Chart.js (bar charts).
+* 🚨 **Anomaly Detection**: Highlights high-value trades.
+* 🌐 **Multi-Chain Support**: Works with Polygon and Ethereum; support for Aptos and XRPL planned.
+* 📱 **Responsive UI**: Mobile-friendly, animated interface with a modern design.
 
 ---
 
 ## 🧰 Tech Stack
 
-| Layer              | Tools/Frameworks                               |
-| ------------------ | ---------------------------------------------- |
-| Frontend           | React, TypeScript, Tailwind CSS, Framer Motion |
-| Data Visualization | Chart.js, react-chartjs-2                      |
-| Voice Input        | Web Speech API                                 |
-| Blockchain Backend | Nodit Web3 Data API, MCP, Stream API           |
-| Dev Tools          | Axios, PostCSS, Autoprefixer                   |
+| Category        | Tools Used                                     |
+| --------------- | ---------------------------------------------- |
+| Frontend        | React, TypeScript, Tailwind CSS, Framer Motion |
+| Visualization   | Chart.js, react-chartjs-2                      |
+| Voice Input     | Web Speech API                                 |
+| Blockchain Data | Nodit Web3 Data API, MCP, Stream API           |
+| Networking      | Axios                                          |
 
 ---
 
-## 🎯 Hackathon Alignment: *WaveHack/Buildathon*
+## 🎯 WaveHack/Buildathon Alignment
 
-VoiceChain Explorer addresses the **AI + Analytics** theme by:
+VoiceChain Explorer supports the **AI + Analytics** theme by:
 
-* Using **Nodit MCP** for natural language blockchain querying.
-* Leveraging **Web3 Data API** to fetch NFT & transaction history.
-* Implementing **Stream API** for real-time data monitoring.
-* Delivering **on-chain data visualizations** to enable actionable insights.
-* Lowering the entry barrier to Web3 with a voice/text interface.
-
----
-
-## 📦 Prerequisites
-
-* **Node.js**: v20.x (LTS) – *Tested on v23.6.0*
-* **npm**: v10.9.2+
-* **Nodit API Key**: [Obtain one from Nodit](https://nodit.io)
-* **Microphone**: For voice input (Chrome recommended)
-* **Git**: For cloning the repository
+* Utilizing **Nodit MCP** for natural language understanding.
+* Leveraging **Web3 Data API** for real-time NFT analytics.
+* Integrating **Stream API** (mocked now, ready for WebSocket-based live updates).
+* Visualizing multi-chain data with anomaly detection features.
+* Enhancing data accessibility via voice and natural language.
 
 ---
 
-## ⚙️ Installation
+## ✅ Prerequisites
 
-### 1. Clone the Repository
+Ensure the following are installed:
 
-```bash
-git clone https://github.com/your-username/voicechain-explorer.git
-cd voicechain-explorer
-```
-
-### 2. Install Dependencies
-
-```bash
-npm install
-```
-
-### 3. Set Up Environment Variables
-
-Create a `.env` file in the project root:
-
-```env
-REACT_APP_NODIT_API_KEY=your-nodit-api-key
-```
-
-### 4. Initialize Tailwind CSS
-
-```bash
-npx tailwindcss init -p
-```
-
-Update `tailwind.config.js`:
-
-```js
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
-  theme: { extend: {} },
-  plugins: [],
-};
-```
-
-### 5. Start the Development Server
-
-```bash
-npm start
-```
-
-Visit [http://localhost:3000](http://localhost:3000) — Chrome is recommended for voice input.
+* **Node.js**: `v20.x` (LTS) or `v23.6.0`
+* **npm**: `v10.9.2` or later
+* **Browser**: Google Chrome (for Web Speech API support)
+* **Microphone**: Required for voice input
+* **Nodit API Key**: [Get one here](https://nodit.io)
 
 ---
 
-## 🧪 Usage
+## 🛠️ Installation
 
-### 🎙 Query Blockchain Data
+1. **Clone the Repository**
 
-* Click the mic button and say a query like:
-  *“Show me all NFT trades by 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on Polygon in the last 24 hours.”*
+   ```bash
+   git clone https://github.com/chidal/voicechain-explorer.git
+   cd voicechain-explorer
+   ```
 
-* Alternatively, type queries in the input field.
+2. **Install Dependencies**
 
-### 📊 View Results
+   ```bash
+   npm install
+   ```
 
-* Results will display in a dynamic table.
-* NFT trade volumes are visualized using **bar charts**.
+3. **Set Up Environment Variables**
 
-### 🛰 Real-Time Monitoring
+   Create a `.env` file in the root directory:
 
-* Placeholder for **live transaction updates** using **Nodit Stream API** (WebSocket setup required).
+   ```
+   REACT_APP_NODIT_API_KEY=your-nodit-api-key
+   ```
 
+4. **Start the Development Server**
 
+   ```bash
+   npm start
+   ```
 
-## 🔌 Nodit Integration
+   Open in your browser: [http://localhost:3000](http://localhost:3000)
 
-### 📦 Web3 Data API
+---
 
-Example for fetching NFT transfers:
+## 📦 Deployment
+
+1. **Push to GitHub**
+
+   ```bash
+   git add .
+   git commit -m "Deploy VoiceChain Explorer"
+   git push origin main
+   ```
+
+2. **Deploy on Vercel**
+
+   * Go to [vercel.com](https://vercel.com) and import the repository.
+   * Add your `REACT_APP_NODIT_API_KEY` under **Environment Variables**.
+   * Deploy and view your live app!
+
+---
+
+## 💡 Usage
+
+* **Run Queries**: Click "🎙️ Speak" or type queries like:
+
+  ```
+  Show NFT trades by 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on Polygon
+  ```
+
+* **Explore Results**:
+
+  * View a table of transactions.
+  * High-value trades are flagged.
+  * View distribution in a bar chart.
+
+* **Live Monitoring**:
+
+  * Trade data updates every 5 seconds (demo version).
+
+---
+
+## 🔗 Nodit Integration
+
+### Web3 Data API
 
 ```ts
-const data = await fetchNFTTrades(
-  "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-  "polygon"
-);
+const data = await fetchNFTTrades('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 'polygon');
 ```
 
-### 🧠 MCP Setup
+### MCP (Model Context Protocol)
 
-Example `mcp.config.json`:
-
-```json
+```js
 {
   "mcpServers": {
     "nodit": {
       "command": "npx",
       "args": ["@noditlabs/nodit-mcp-server@latest"],
-      "env": {
-        "NODIT_API_KEY": "your-api-key"
-      }
+      "env": { "NODIT_API_KEY": "your-api-key" }
     }
   }
 }
 ```
+
+### Stream API
+
+Real-time updates are currently mocked but ready for WebSocket integration.
+
+---
+
+## 🔭 Future Enhancements
+
+* ✅ Full MCP integration with a production LLM.
+* 🔌 Live streaming via Nodit’s WebSocket API.
+* 🌉 Multi-chain expansion to Aptos and XRPL.
+* 📈 More visualizations (e.g., price trends).
+* 🌍 Multilingual voice input support.
+
+---
+
+## 🐛 Troubleshooting
+
+| Issue                | Solution                                                 |
+| -------------------- | -------------------------------------------------------- |
+| Voice not working    | Use Google Chrome and ensure mic permissions are granted |
+| API not responding   | Double-check `REACT_APP_NODIT_API_KEY` in `.env`         |
+| Charts not rendering | Ensure Chart.js and react-chartjs-2 are installed        |
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
