@@ -1,8 +1,4 @@
-Sure! Here's your content neatly arranged in a professional and readable **README.md** format for the **VoiceChain Explorer** project:
-
----
-
-# 🔊 VoiceChain Explorer
+# VoiceChain Explorer
 
 **VoiceChain Explorer** is an AI-powered, voice-driven blockchain explorer built for the **WaveHack/Buildathon** using **Nodit’s** Web3 Data API, Model Context Protocol (MCP), and Stream API. Users can query blockchain data (e.g., NFT trades on Polygon or Ethereum) via voice or text using natural language, and receive instant results with dynamic visualizations.
 
@@ -10,7 +6,7 @@ The app features a polished, animated UI built with **React**, **TypeScript**, *
 
 ---
 
-## 🚀 Features
+## Features
 
 * 🎙️ **Voice-Driven Queries**: Query blockchain data with natural language via voice input using the Web Speech API (with a text fallback).
 * 🤖 **AI-Powered Analytics**: Integrates Nodit’s MCP for natural language query parsing.
@@ -22,7 +18,7 @@ The app features a polished, animated UI built with **React**, **TypeScript**, *
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 | Category        | Tools Used                                     |
 | --------------- | ---------------------------------------------- |
@@ -34,7 +30,7 @@ The app features a polished, animated UI built with **React**, **TypeScript**, *
 
 ---
 
-## 🎯 WaveHack/Buildathon Alignment
+## WaveHack/Buildathon Alignment
 
 VoiceChain Explorer supports the **AI + Analytics** theme by:
 
@@ -46,7 +42,7 @@ VoiceChain Explorer supports the **AI + Analytics** theme by:
 
 ---
 
-## ✅ Prerequisites
+## Prerequisites
 
 Ensure the following are installed:
 
@@ -58,7 +54,7 @@ Ensure the following are installed:
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 1. **Clone the Repository**
 
@@ -91,7 +87,7 @@ Ensure the following are installed:
 
 ---
 
-## 📦 Deployment
+## Deployment
 
 1. **Push to GitHub**
 
@@ -109,7 +105,7 @@ Ensure the following are installed:
 
 ---
 
-## 💡 Usage
+## Usage
 
 * **Run Queries**: Click "🎙️ Speak" or type queries like:
 
