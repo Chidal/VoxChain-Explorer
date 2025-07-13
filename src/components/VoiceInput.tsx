@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { saveQueryTemplate } from '../services/noditService';
 
 interface VoiceInputProps {
   onQuery: (query: string) => void;
@@ -10,15 +11,14 @@ const VoiceInput: React.FC<VoiceInputProps> = ({ onQuery }) => {
   const [isListening, setIsListening] = useState(false);
   const [textInput, setTextInput] = useState('');
   const [error, setError] = useState<string | null>(null);
-
   const suggestions = [
-    'Show me all NFT trades by 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on Polygon',
-    'List recent token transfers on Ethereum',
+    'Show NFT trades by 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on Polygon',
+    'View portfolio for 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on Ethereum',
   ];
 
   useEffect(() => {
     if (!('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
-      setError('Voice input is not supported in this browser. Use text input.');
+      setError('Voice input not supported. Use text input.');
       return;
     }
 
@@ -35,7 +35,7 @@ const VoiceInput: React.FC<VoiceInputProps> = ({ onQuery }) => {
     };
 
     recognition.onerror = () => {
-      setError('Voice recognition failed. Please try again or use text input.');
+      setError('Voice recognition failed. Try again or use text input.');
       setIsListening(false);
     };
 
@@ -46,10 +46,11 @@ const VoiceInput: React.FC<VoiceInputProps> = ({ onQuery }) => {
     return () => recognition.stop();
   }, [isListening, onQuery]);
 
-  const handleTextSubmit = (e: React.FormEvent) => {
+  const handleTextSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (textInput) {
       onQuery(textInput);
+      await saveQueryTemplate(textInput, 'anonymous'); // Save to community gallery
       setTextInput('');
     }
   };

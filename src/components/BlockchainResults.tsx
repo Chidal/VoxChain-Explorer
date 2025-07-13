@@ -7,8 +7,14 @@ interface BlockchainResultsProps {
 
 const BlockchainResults: React.FC<BlockchainResultsProps> = ({ results }) => {
   const isHighValueTrade = (trade: any) => {
-    // Simple rule: Flag trades with value > 0.1 ETH (placeholder)
-    return trade.value && parseFloat(trade.value) > 0.1;
+    return trade.value && parseFloat(trade.value) > 0.1; // Flag trades > 0.1 ETH
+  };
+
+  const getAnomalyExplanation = (trade: any) => {
+    if (isHighValueTrade(trade)) {
+      return `High-value trade detected: ${trade.value} ETH exceeds typical range.`;
+    }
+    return '';
   };
 
   return (
@@ -33,8 +39,9 @@ const BlockchainResults: React.FC<BlockchainResultsProps> = ({ results }) => {
                 <th className="p-3">To</th>
                 <th className="p-3">Token ID</th>
                 <th className="p-3">Value (ETH)</th>
+                <th className="p-3">Chain</th>
                 <th className="p-3">Timestamp</th>
-                <th className="p-3">Status</th>
+                <th className="p-3">Anomaly</th>
               </tr>
             </thead>
             <tbody>
@@ -51,10 +58,11 @@ const BlockchainResults: React.FC<BlockchainResultsProps> = ({ results }) => {
                   <td className="p-3">{tx.to?.slice(0, 10)}...</td>
                   <td className="p-3">{tx.tokenId || 'N/A'}</td>
                   <td className="p-3">{tx.value || 'N/A'}</td>
+                  <td className="p-3">{tx.chain}</td>
                   <td className="p-3">{new Date(tx.timestamp).toLocaleString()}</td>
                   <td className="p-3">
                     {isHighValueTrade(tx) && (
-                      <span className="text-yellow-400 font-bold">High Value</span>
+                      <span className="text-yellow-400 font-bold">{getAnomalyExplanation(tx)}</span>
                     )}
                   </td>
                 </motion.tr>
