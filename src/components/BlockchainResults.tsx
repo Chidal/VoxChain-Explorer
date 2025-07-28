@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const BlockchainResults: React.FC = () => {
-  const mockResults = [
-    { transactionHash: '0x123...', from: '0xABC...', to: '0xDEF...', tokenId: 'NFT001', value: '1 ETH' },
-    { transactionHash: '0x456...', from: '0xGHI...', to: '0xJKL...', tokenId: 'NFT002', value: '0.5 ETH' },
-  ];
+  const [results, setResults] = useState([
+    { transactionHash: '0x123...', from: '0xABC...', to: '0xDEF...', tokenId: 'NFT001', value: '1 APT', chain: 'Aptos' },
+  ]);
+
+  useEffect(() => {
+    // Mock Webhook stream (simulating Aptos Indexer API)
+    const interval = setInterval(() => {
+      setResults((prev) => [
+        ...prev,
+        {
+          transactionHash: `0x${Math.random().toString(16).slice(2, 10)}...`,
+          from: `0x${Math.random().toString(16).slice(2, 10)}...`,
+          to: `0x${Math.random().toString(16).slice(2, 10)}...`,
+          tokenId: `NFT${Math.floor(Math.random() * 1000)}`,
+          value: `${(Math.random() * 2).toFixed(1)} APT`,
+          chain: 'Aptos',
+        },
+      ].slice(-3)); // Keep last 3 transactions
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <motion.div
@@ -24,16 +41,18 @@ const BlockchainResults: React.FC = () => {
             <th className="pb-2">To</th>
             <th className="pb-2">Token ID</th>
             <th className="pb-2">Value</th>
+            <th className="pb-2">Chain</th>
           </tr>
         </thead>
         <tbody>
-          {mockResults.map((result, index) => (
+          {results.map((result, index) => (
             <tr key={index} className="border-b border-gray-700">
-              <td className="py-2">{result.transactionHash.slice(0, 10)}...</td>
-              <td className="py-2">{result.from.slice(0, 10)}...</td>
-              <td className="py-2">{result.to.slice(0, 10)}...</td>
+              <td className="py-2">{result.transactionHash}</td>
+              <td className="py-2">{result.from}</td>
+              <td className="py-2">{result.to}</td>
               <td className="py-2">{result.tokenId}</td>
               <td className="py-2">{result.value}</td>
+              <td className="py-2">{result.chain}</td>
             </tr>
           ))}
         </tbody>

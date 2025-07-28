@@ -6,7 +6,7 @@ const QueryGallery: React.FC = () => {
   const mockQueries = [
     { text: 'Show NFT trades on Polygon', details: 'Displays recent NFT trades on the Polygon network.' },
     { text: 'Get portfolio for 0xABC...', details: 'Fetches portfolio details for address 0xABC... on Ethereum.' },
-    { text: 'Analyze Ethereum activity', details: 'Provides an overview of recent activity on Ethereum.' },
+    { text: 'Analyze Aptos activity', details: 'Provides an overview of recent activity on Aptos.' },
   ];
 
   return (
@@ -26,6 +26,7 @@ const QueryGallery: React.FC = () => {
               className="text-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-neon-blue"
               aria-expanded={selectedQuery === query.text}
               aria-controls={`query-${index}`}
+              title="Click to view query details"
             >
               {query.text}
             </button>
@@ -42,6 +43,7 @@ const QueryGallery: React.FC = () => {
           onClick={() => setSelectedQuery(null)}
           className="mt-4 p-2 bg-neon-green text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-neon-green"
           aria-label="Close query details"
+          title="Close the selected query details"
         >
           Close Details
         </button>

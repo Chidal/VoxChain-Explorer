@@ -20,6 +20,7 @@ interface ChainPortfolio {
 const Portfolio: React.FC = () => {
   const [showDetails, setShowDetails] = useState<{ [key: string]: boolean }>({ polygon: false, ethereum: false, aptos: false });
   const [filter, setFilter] = useState('all');
+  const [aiInsight, setAiInsight] = useState('');
 
   const mockPortfolio: { [key: string]: ChainPortfolio } = {
     polygon: {
@@ -38,6 +39,12 @@ const Portfolio: React.FC = () => {
 
   const filteredChains = filter === 'all' ? Object.keys(mockPortfolio) : [filter];
 
+  const analyzePortfolio = (chain: string) => {
+    const totalValue = parseFloat(mockPortfolio[chain].nfts.reduce((sum, nft) => sum + parseFloat(nft.value), 0).toString()) +
+                       parseFloat(mockPortfolio[chain].tokens.reduce((sum, token) => sum + parseFloat(token.balance), 0).toString());
+    setAiInsight(`AI Insight: ${chain.toUpperCase()} portfolio value is approximately ${totalValue.toFixed(2)} units. Consider diversifying.`);
+  };
+
   return (
     <motion.div
       initial={{ scale: 0.9, opacity: 0 }}
@@ -53,6 +60,7 @@ const Portfolio: React.FC = () => {
           onChange={(e) => setFilter(e.target.value)}
           className="w-full p-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-neon-blue"
           aria-label="Filter chains"
+          title="Filter your portfolio by chain"
         >
           <option value="all">All Chains</option>
           <option value="polygon">Polygon</option>
@@ -63,10 +71,14 @@ const Portfolio: React.FC = () => {
       {filteredChains.map((chain) => (
         <div key={chain} className="mb-4">
           <button
-            onClick={() => setShowDetails((prev) => ({ ...prev, [chain]: !prev[chain] }))}
+            onClick={() => {
+              setShowDetails((prev) => ({ ...prev, [chain]: !prev[chain] }));
+              analyzePortfolio(chain);
+            }}
             className="w-full text-left p-2 bg-neon-blue text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-neon-green"
             aria-expanded={showDetails[chain]}
             aria-controls={`portfolio-${chain}`}
+            title="Click to view or analyze portfolio details"
           >
             {chain.toUpperCase()} ({mockPortfolio[chain].nfts.length} NFTs, {mockPortfolio[chain].tokens.length} Tokens)
           </button>
@@ -92,6 +104,7 @@ const Portfolio: React.FC = () => {
           )}
         </div>
       ))}
+      {aiInsight && <p className="mt-4 text-neon-blue">{aiInsight}</p>}
     </motion.div>
   );
 };

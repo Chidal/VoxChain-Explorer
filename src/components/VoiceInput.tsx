@@ -3,10 +3,20 @@ import { motion } from 'framer-motion';
 
 const VoiceInput: React.FC = () => {
   const [transcript, setTranscript] = useState('Speak or type your query...');
+  const [aiResponse, setAiResponse] = useState('');
 
   const handleTextSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setTranscript('Query submitted: ' + (document.querySelector('input') as HTMLInputElement)?.value || 'No input');
+    const input = (document.querySelector('input') as HTMLInputElement)?.value || '';
+    setTranscript(`Query submitted: ${input}`);
+    // Mock AI response using Nodit MCP (simulating Claude)
+    if (input.toLowerCase().includes('aptos')) {
+      setAiResponse('AI Analysis: Recent Aptos transactions show 3 NFT trades totaling 1.5 APT in the last hour.');
+    } else if (input.toLowerCase().includes('wallet')) {
+      setAiResponse('AI Analysis: Wallet activity includes 0.8 ETH received and 2 NFT purchases.');
+    } else {
+      setAiResponse('AI Analysis: Please specify a wallet or chain (e.g., Aptos) for insights.');
+    }
   };
 
   return (
@@ -25,6 +35,7 @@ const VoiceInput: React.FC = () => {
           className="p-3 rounded-full bg-neon-blue text-white focus:outline-none focus:ring-2 focus:ring-neon-blue"
           onClick={() => setTranscript('Voice input placeholder')}
           aria-label="Simulate voice input"
+          title="Click to simulate voice input"
         >
           Speak
         </motion.button>
@@ -33,7 +44,7 @@ const VoiceInput: React.FC = () => {
       <form onSubmit={handleTextSubmit} className="mt-4">
         <input
           type="text"
-          placeholder="e.g., Show NFT trades on Polygon"
+          placeholder="e.g., Show Aptos transactions or Analyze wallet 0xABC..."
           className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-neon-blue"
           aria-label="Text query input"
         />
@@ -41,10 +52,12 @@ const VoiceInput: React.FC = () => {
           type="submit"
           className="mt-2 w-full p-3 bg-neon-green rounded-lg text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-neon-green"
           aria-label="Submit query"
+          title="Submit your query for AI analysis"
         >
           Submit
         </button>
       </form>
+      {aiResponse && <p className="mt-4 text-neon-blue">{aiResponse}</p>}
     </motion.div>
   );
 };
