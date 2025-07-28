@@ -1,76 +1,43 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-interface BlockchainResultsProps {
-  results: any[];
-}
-
-const BlockchainResults: React.FC<BlockchainResultsProps> = ({ results }) => {
-  const isHighValueTrade = (trade: any) => {
-    return trade.value && parseFloat(trade.value) > 0.1; // Flag trades > 0.1 ETH
-  };
-
-  const getAnomalyExplanation = (trade: any) => {
-    if (isHighValueTrade(trade)) {
-      return `High-value trade detected: ${trade.value} ETH exceeds typical range.`;
-    }
-    return '';
-  };
+const BlockchainResults: React.FC = () => {
+  const mockResults = [
+    { transactionHash: '0x123...', from: '0xABC...', to: '0xDEF...', tokenId: 'NFT001', value: '1 ETH' },
+    { transactionHash: '0x456...', from: '0xGHI...', to: '0xJKL...', tokenId: 'NFT002', value: '0.5 ETH' },
+  ];
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="p-6 bg-gray-800 rounded-lg shadow-lg"
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="bg-gray-800 p-6 rounded-lg shadow-lg"
       role="region"
-      aria-label="Query Results"
+      aria-label="Blockchain Results"
     >
-      <h2 className="text-2xl font-bold mb-4">Transaction Results</h2>
-      {results.length === 0 ? (
-        <p className="text-gray-400">No results found. Try a different query.</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-gray-700">
-                <th className="p-3">Tx Hash</th>
-                <th className="p-3">From</th>
-                <th className="p-3">To</th>
-                <th className="p-3">Token ID</th>
-                <th className="p-3">Value (ETH)</th>
-                <th className="p-3">Chain</th>
-                <th className="p-3">Timestamp</th>
-                <th className="p-3">Anomaly</th>
-              </tr>
-            </thead>
-            <tbody>
-              {results.map((tx, index) => (
-                <motion.tr
-                  key={index}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="border-b border-gray-600 hover:bg-gray-600"
-                >
-                  <td className="p-3">{tx.transactionHash?.slice(0, 10)}...</td>
-                  <td className="p-3">{tx.from?.slice(0, 10)}...</td>
-                  <td className="p-3">{tx.to?.slice(0, 10)}...</td>
-                  <td className="p-3">{tx.tokenId || 'N/A'}</td>
-                  <td className="p-3">{tx.value || 'N/A'}</td>
-                  <td className="p-3">{tx.chain}</td>
-                  <td className="p-3">{new Date(tx.timestamp).toLocaleString()}</td>
-                  <td className="p-3">
-                    {isHighValueTrade(tx) && (
-                      <span className="text-yellow-400 font-bold">{getAnomalyExplanation(tx)}</span>
-                    )}
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      <h2 className="text-xl font-bold text-neon-green mb-4">Blockchain Results</h2>
+      <table className="w-full text-left">
+        <thead>
+          <tr className="border-b border-gray-600">
+            <th className="pb-2">Tx Hash</th>
+            <th className="pb-2">From</th>
+            <th className="pb-2">To</th>
+            <th className="pb-2">Token ID</th>
+            <th className="pb-2">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {mockResults.map((result, index) => (
+            <tr key={index} className="border-b border-gray-700">
+              <td className="py-2">{result.transactionHash.slice(0, 10)}...</td>
+              <td className="py-2">{result.from.slice(0, 10)}...</td>
+              <td className="py-2">{result.to.slice(0, 10)}...</td>
+              <td className="py-2">{result.tokenId}</td>
+              <td className="py-2">{result.value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </motion.div>
   );
 };

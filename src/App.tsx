@@ -1,98 +1,97 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import VoiceInput from './components/VoiceInput';
 import BlockchainResults from './components/BlockchainResults';
 import DataVisualization from './components/DataVisualization';
 import QueryGallery from './components/QueryGallery';
-import { fetchNFTTrades, fetchPortfolio, setupStream, setupMCP } from './services/noditService';
+import Portfolio from './components/Portfolio';
+import { TourProvider, useTour } from '@reactour/tour'; // Install: npm install @reactour/tour
 
-const App: React.FC = () => {
-  const [results, setResults] = useState<any[]>([]);
-  const [portfolio, setPortfolio] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+const steps = [
+  { selector: '[data-tour="voice-input"]', content: 'Start by entering a voice or text query here.' },
+  { selector: '[data-tour="blockchain-results"]', content: 'View AI-analyzed blockchain results here.' },
+  { selector: '[data-tour="portfolio"]', content: 'Check your portfolio with AI insights here.' },
+];
 
-  useEffect(() => {
-    // Initialize MCP
-    setupMCP().catch((err) => setError('MCP initialization failed.'));
-    // Set up real-time stream for Polygon
-    const unsubscribe = setupStream('polygon', (event) => {
-      setResults((prev) => [event, ...prev.slice(0, 9)]); // Keep latest 10
-    });
-    return unsubscribe;
-  }, []);
-
-  const handleQuery = async (query: string) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const addressMatch = query.match(/0x[a-fA-F0-9]{40}/);
-      const chain = query.toLowerCase().includes('polygon') ? 'polygon' : query.toLowerCase().includes('aptos') ? 'aptos' : 'ethereum';
-      const address = addressMatch ? addressMatch[0] : '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
-
-      if (query.toLowerCase().includes('portfolio')) {
-        const data = await fetchPortfolio(address, [chain]);
-        setPortfolio(data);
-      } else {
-        const data = await fetchNFTTrades(address, chain);
-        setResults(data);
-      }
-    } catch (err) {
-      setError('Failed to fetch data. Check your query or API key.');
-    } finally {
-      setLoading(false);
-    }
-  };
+const AppContent: React.FC = () => {
+  const { setIsOpen } = useTour();
+  const [isTourOpen, setIsTourOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 text-white">
-      <motion.header
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 text-white font-sans">
+      <motion.nav
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="p-6 text-center"
+        className="bg-gray-800 p-4 flex justify-between items-center shadow-lg"
       >
-        <h1 className="text-4xl font-bold">VoiceChain Explorer</h1>
-        <p className="text-lg mt-2">AI-Powered Multi-Chain Analytics</p>
-      </motion.header>
-      <main className="container mx-auto p-4 space-y-6">
-        <VoiceInput onQuery={handleQuery} />
-        {loading && (
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 1 }}
-            className="text-center text-2xl"
+        <div className="flex items-center space-x-4">
+          <h1 className="text-2xl font-bold text-neon-blue">VoiceChain Explorer</h1>
+        </div>
+        <div className="space-x-4">
+          <button className="text-neon-green hover:text-white">Portfolio</button>
+          <button className="text-neon-green hover:text-white">Gallery</button>
+          <button
+            onClick={() => setIsTourOpen(true)}
+            className="text-neon-green hover:text-white"
           >
-            Loading...
-          </motion.div>
-        )}
-        {error && <p className="text-red-500 text-center text-lg">{error}</p>}
-        <QueryGallery onSelectQuery={handleQuery} />
-        {results.length > 0 && (
-          <>
-            <BlockchainResults results={results} />
-            <DataVisualization results={results} />
-          </>
-        )}
-        {portfolio.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="p-6 bg-gray-800 rounded-lg shadow-lg"
-          >
-            <h2 className="text-2xl font-bold mb-4">Portfolio Overview</h2>
-            {portfolio.map((chainData, index) => (
-              <div key={index}>
-                <h3 className="text-xl">{chainData.chain.toUpperCase()}</h3>
-                <p>NFTs: {chainData.nfts.length}</p>
-                <p>Tokens: {chainData.tokens.length}</p>
-              </div>
-            ))}
-          </motion.div>
-        )}
+            Take Tour
+          </button>
+        </div>
+      </motion.nav>
+
+      <main className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          data-tour="voice-input"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="bg-gray-800 p-6 rounded-lg shadow-lg"
+        >
+          <VoiceInput />
+        </motion.div>
+
+        <motion.div
+          data-tour="blockchain-results"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="bg-gray-800 p-6 rounded-lg shadow-lg col-span-1 md:col-span-2"
+        >
+          <BlockchainResults />
+        </motion.div>
+
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="bg-gray-800 p-6 rounded-lg shadow-lg"
+        >
+          <DataVisualization />
+        </motion.div>
+
+        <motion.div
+          data-tour="portfolio"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="bg-gray-800 p-6 rounded-lg shadow-lg"
+        >
+          <Portfolio />
+        </motion.div>
+
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="bg-gray-800 p-6 rounded-lg shadow-lg"
+        >
+          <QueryGallery />
+        </motion.div>
       </main>
     </div>
   );
 };
+
+const App: React.FC = () => (
+  <TourProvider steps={steps}>
+    <AppContent />
+  </TourProvider>
+);
 
 export default App;

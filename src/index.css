@@ -2,3 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --neon-blue: #00FFFF;
+    --neon-green: #00FF00;
+  }
+}
+
+@layer components {
+  .text-neon-blue {
+    color: #00FFFF;
+  }
+  .text-neon-green {
+    color: #00FF00;
+  }
+}

@@ -1,67 +1,33 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
-import { motion } from 'framer-motion';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
-interface DataVisualizationProps {
-  results: any[];
-}
-
-const DataVisualization: React.FC<DataVisualizationProps> = ({ results }) => {
-  const chainCounts = results.reduce((acc, tx) => {
-    const chain = tx.chain || 'Unknown';
-    acc[chain] = (acc[chain] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
-
-  const dates = results.map((tx) => new Date(tx.timestamp).toLocaleDateString());
-  const volumes = results.map(() => 1); // Count trades
-  const predicted = volumes.map((v, i) => (i > 0 ? (v + volumes[i - 1]) / 2 : v)); // Simple moving average
-
-  const data = {
-    labels: dates.length > 0 ? dates : Object.keys(chainCounts),
+const DataVisualization: React.FC = () => {
+  const chartData = {
+    labels: ['T-4', 'T-3', 'T-2', 'T-1', 'T-0'],
     datasets: [
       {
-        label: 'Actual Trades',
-        data: volumes.length > 0 ? volumes : Object.values(chainCounts),
-        borderColor: 'blue',
-        fill: false,
-      },
-      {
-        label: 'Predicted Trades',
-        data: predicted,
-        borderColor: 'green',
-        borderDash: [5, 5],
-        fill: false,
+        label: 'Trade Volume',
+        data: [10, 20, 15, 30, 25],
+        borderColor: '#00FFFF',
+        backgroundColor: 'rgba(0, 255, 255, 0.2)',
       },
     ],
   };
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: { position: 'top' as const },
-      title: { display: true, text: 'NFT Trade Trends and Predictions' },
-    },
-  };
-
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="p-6 bg-gray-800 rounded-lg shadow-lg"
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="bg-gray-800 p-6 rounded-lg shadow-lg"
       role="region"
       aria-label="Data Visualization"
     >
-      <h2 className="text-2xl font-bold mb-4">Trade Trends</h2>
-      {results.length === 0 ? (
-        <p className="text-gray-400">No data to visualize. Run a query to see results.</p>
-      ) : (
-        <Line data={data} options={options} />
-      )}
+      <h2 className="text-xl font-bold text-neon-green mb-4">Data Visualization</h2>
+      <Line data={chartData} options={{ responsive: true, plugins: { legend: { position: 'top' } } }} />
     </motion.div>
   );
 };

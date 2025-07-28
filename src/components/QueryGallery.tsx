@@ -1,48 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { getQueryTemplates } from '../services/noditService';
 
-interface QueryGalleryProps {
-  onSelectQuery: (query: string) => void;
-}
-
-const QueryGallery: React.FC<QueryGalleryProps> = ({ onSelectQuery }) => {
-  const [templates, setTemplates] = useState<any[]>([]);
-
-  useEffect(() => {
-    getQueryTemplates().then(setTemplates).catch(console.error);
-  }, []);
+const QueryGallery: React.FC = () => {
+  const [selectedQuery, setSelectedQuery] = useState<string | null>(null);
+  const mockQueries = [
+    { text: 'Show NFT trades on Polygon', details: 'Displays recent NFT trades on the Polygon network.' },
+    { text: 'Get portfolio for 0xABC...', details: 'Fetches portfolio details for address 0xABC... on Ethereum.' },
+    { text: 'Analyze Ethereum activity', details: 'Provides an overview of recent activity on Ethereum.' },
+  ];
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="p-6 bg-gray-800 rounded-lg shadow-lg"
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="bg-gray-800 p-6 rounded-lg shadow-lg"
       role="region"
       aria-label="Query Gallery"
     >
-      <h2 className="text-2xl font-bold mb-4">Community Queries</h2>
-      {templates.length === 0 ? (
-        <p className="text-gray-400">No community queries yet.</p>
-      ) : (
-        <ul className="space-y-2">
-          {templates.map((template, index) => (
-            <motion.li
-              key={index}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: index * 0.1 }}
+      <h2 className="text-xl font-bold text-neon-green mb-4">Community Queries</h2>
+      <ul className="list-disc pl-5 mb-4">
+        {mockQueries.map((query, index) => (
+          <li key={index} className="py-1">
+            <button
+              onClick={() => setSelectedQuery(query.text)}
+              className="text-blue-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-neon-blue"
+              aria-expanded={selectedQuery === query.text}
+              aria-controls={`query-${index}`}
             >
-              <button
-                className="text-blue-300 hover:underline focus:outline-none"
-                onClick={() => onSelectQuery(template.template)}
-                aria-label={`Run community query: ${template.template}`}
-              >
-                {template.template} (Votes: {template.votes})
-              </button>
-            </motion.li>
-          ))}
-        </ul>
+              {query.text}
+            </button>
+            {selectedQuery === query.text && (
+              <div id={`query-${index}`} className="mt-2 pl-4 text-gray-300">
+                {query.details}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+      {selectedQuery && (
+        <button
+          onClick={() => setSelectedQuery(null)}
+          className="mt-4 p-2 bg-neon-green text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-neon-green"
+          aria-label="Close query details"
+        >
+          Close Details
+        </button>
       )}
     </motion.div>
   );
